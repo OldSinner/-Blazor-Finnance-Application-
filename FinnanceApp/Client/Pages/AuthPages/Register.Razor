@@ -1,0 +1,92 @@
+@page "/register"
+@layout EmptyLayout
+@namespace FinnanceApp.Client.Pages.AuthPages
+@inject NavigationManager navigation
+@inject FinnanceApp.Client.Services.IAuthService authService
+@inject NotificationService notificationService
+
+<div class="container">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+            <div class="card-body p-0">
+                <!-- Nested Row within Card Body -->
+                <div class="row">
+                    <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+                    <div class="col-lg-7">
+                        <div class="p-5">
+                            <div class="text-center">
+                                <h1 class="h4 text-gray-900 mb-4">Stwórz konto!</h1>
+                            </div>
+                            <EditForm class="user" Model="@user" OnValidSubmit="HandleRegister">
+                                <DataAnnotationsValidator />
+                                  <ValidationSummary />
+                                  <Alert Message="@message" MessageType="@messageType"></Alert>
+                                <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" id="exampleFirstName"
+                                            placeholder="Nazwa użytkownika" @bind-value="user.Username" >                                  
+                                  
+                                </div>
+                                <div class="form-group">
+                                        <input type="email" class="form-control form-control-user" id="exampleInputEmail"
+                                        placeholder="Adres Email" @bind-value="user.Email">
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="password" class="form-control form-control-user"
+                                            id="exampleInputPassword" placeholder="Password" @bind-value="user.Password">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="password" class="form-control form-control-user"
+                                            id="exampleRepeatPassword" placeholder="Repeat Password" @bind-value="user.ConfrimPassword">
+                                    </div>
+                                </div>
+                                <input type="submit" class="btn btn-primary btn-user btn-block" disabled="@isBusy" Value="Zarejestruj">
+                                                                
+                            </EditForm>
+                            <hr>
+                            
+                            <div class="text-center">
+                                <a class="small" href="/login">Masz już konto? Zaloguj się!</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+@code {
+    private FinnanceApp.Shared.Models.UserRegister user = new FinnanceApp.Shared.Models.UserRegister();
+    Models.AlertMessageType messageType = Models.AlertMessageType.Success; 
+    string message = string.Empty;
+    bool isBusy=false;
+ 
+    async Task HandleRegister()
+    {
+        isBusy=true;
+        var result = await authService.register(user);
+        if (result.isSuccess)
+        {
+           
+            navigation.NavigateTo("login");
+        }
+        else
+        {
+            message = result.Message;
+            messageType = Models.AlertMessageType.Error; 
+        }
+        isBusy=false;
+    }
+
+
+}
+<style>
+    body {
+        background-color: #4e73df;
+        background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
+        background-size: cover;
+    }
+</style>
