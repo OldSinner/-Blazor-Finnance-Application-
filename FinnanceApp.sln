@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnanceApp.Server", "FinnanceApp\Server\FinnanceApp.Server.csproj", "{6D2A3E8C-233C-43D3-A94C-2A64B119AE7C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinnanceApp.Server", "FinnanceApp\Server\FinnanceApp.Server.csproj", "{6D2A3E8C-233C-43D3-A94C-2A64B119AE7C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnanceApp.Client", "FinnanceApp\Client\FinnanceApp.Client.csproj", "{38A409AB-DEBE-47A8-AF5B-091A041F89F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinnanceApp.Client", "FinnanceApp\Client\FinnanceApp.Client.csproj", "{38A409AB-DEBE-47A8-AF5B-091A041F89F1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinnanceApp.Shared", "FinnanceApp\Shared\FinnanceApp.Shared.csproj", "{8E757485-3B26-4E99-A04C-8BBE7F6FC31E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FinnanceApp.Shared", "FinnanceApp\Shared\FinnanceApp.Shared.csproj", "{8E757485-3B26-4E99-A04C-8BBE7F6FC31E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

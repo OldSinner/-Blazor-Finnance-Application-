@@ -1,0 +1,113 @@
+﻿@page "/bills/page/{page:int}"
+@using FinnanceApp.Client.Pages.BillsPages
+
+@inject FinnanceApp.Client.Services.IBillService billService
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager _nav
+@inject NotificationService notificationService
+@implements IDisposable
+@attribute [Authorize]
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm">
+            <table class="table table-striped table-bordered" style="text-align:center;">
+                <thead class="thead-light">
+                    <tr>
+                        <th class="money">Kwota</th>
+                        <th class="shop">Sklep</th>
+                        <th class="buyer">Płatnik</th>
+                        <th class="date">Data</th>
+                        <th class="description">Opis</th>
+                        <th><a href="bills/add" class="btn btn-success btn-circle" role="button" aria-pressed="true"><i class="fas fa-plus"></i></a></th>
+
+                    </tr>
+                </thead>
+
+
+                @foreach (var entry in billService.billWithPages)
+
+                {
+
+                    <tr style="@bck">
+                        <td class="money">@entry.money zł</td>
+                        <td class="shop">@entry.Shop.name</td>
+                        <td class="buyer">@entry.Person.name</td>
+                        <td class="date">@entry.BuyDate.Date.ToString("dd/MM/yyyy")</td>
+                        <td class="description">@entry.comment</td>
+                        <td class="bills">
+                            <a @onclick="() => DeleteBill(entry.id)" type="button" class="btn btn-danger btn-circle">
+                                <i class="fas fa-trash" style="color:white;"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                }
+
+            </table>
+        </div>
+
+
+    </div>
+
+</div>
+<div class="row justify-content-center">
+    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+        <div class="btn-group mr-2" role="group" aria-label="First group">
+            @if (pageview > 2)
+            {
+                <button type="button" class="btn btn-secondary" @onclick="()=>MoveTo(pageview-2)">@(pageview-2)</button>}
+            @if (pageview > 1)
+            {
+                <button type="button" class="btn btn-secondary" @onclick="()=>MoveTo(pageview-1)">@(pageview-1)</button>}
+            <button type="button" class="btn btn-secondary disabled">@pageview</button>
+            @if (pageview + 1 <= billService.pages)
+            {
+                <button type="button" class="btn btn-secondary" @onclick="()=>MoveTo(pageview+1)">@(pageview+1)</button>}
+            @if (pageview + 2 <= billService.pages)
+            {
+                <button type="button" class="btn btn-secondary" @onclick="()=>MoveTo(pageview+2)">@(pageview+2)</button>}
+
+        </div>
+    </div>
+</div>
+
+
+
+@code { [Parameter]
+    public int page { get; set; }
+    private int pageview { get; set; }
+    string bck { get; set; } = "background-color:#fff;";
+    protected override async Task OnInitializedAsync()
+    {
+        await billService.GetBillListWithPages(page - 1);
+        pageview = page;
+        billService.OnChange += StateHasChanged;
+    }
+
+    private async void MoveTo(int page)
+    {
+        await billService.GetBillListWithPages(page - 1);
+        pageview = page;
+        _nav.NavigateTo($"/bills/page/{page}");
+    }
+    public void Dispose()
+
+    {
+        billService.OnChange -= StateHasChanged;
+    }
+
+    public async void DeleteBill(int id)
+
+    {
+        var result = await billService.DeleteBill(id, pageview - 1);
+    }
+
+    public void AddBill()
+    {
+        _nav.NavigateTo("bills/add");
+    }
+}
+<style>
+   
+</style>

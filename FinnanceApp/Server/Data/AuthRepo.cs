@@ -120,7 +120,8 @@ namespace FinnanceApp.Server.Data
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
-                new Claim(ClaimTypes.Name,user.Username)
+                new Claim(ClaimTypes.Name,user.Username),
+                new Claim(ClaimTypes.Role,"Admin")
 
             };
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(

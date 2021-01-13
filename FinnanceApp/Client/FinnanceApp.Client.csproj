@@ -33,7 +33,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Shared\Components\" />
     <Folder Include="wwwroot\js\" />
   </ItemGroup>
 
