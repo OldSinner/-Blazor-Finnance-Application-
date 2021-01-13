@@ -26,7 +26,7 @@ namespace FinnanceApp.Server.Data
             _emailSender = emailSender;
         }
 
-        public async Task<ServiceResponse<string>> Login(string email, string passowrd)
+        public async Task<ServiceResponse<string>> Login(string email, string passowrd, bool RememberMe)
         {
             var response = new ServiceResponse<string>();
             User user = await _context.Users.FirstOrDefaultAsync(x => x.Email.ToLower() == email.ToLower());
@@ -47,7 +47,7 @@ namespace FinnanceApp.Server.Data
             }
             else
             {
-                response.Data = CreateToken(user);
+                response.Data = CreateToken(user, RememberMe);
                 response.Message = "Zalogowano!";
             }
             return response;
@@ -109,8 +109,14 @@ namespace FinnanceApp.Server.Data
                 return true;
             }
         }
-        private string CreateToken(User user)
+        private string CreateToken(User user, bool remember)
         {
+            DateTime expires_date = new DateTime();
+            if(remember)
+            expires_date = DateTime.Now.AddMonths(1);
+            else
+            expires_date = DateTime.Now.AddHours(1);
+
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
@@ -122,7 +128,7 @@ namespace FinnanceApp.Server.Data
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
             var token = new JwtSecurityToken(
                 claims: claims,
-                expires: DateTime.Now.AddMonths(1),   //TODO - zmienić!!!!
+                expires: expires_date,  
                 signingCredentials: cred
                 );
             var jwt = new JwtSecurityTokenHandler().WriteToken(token);

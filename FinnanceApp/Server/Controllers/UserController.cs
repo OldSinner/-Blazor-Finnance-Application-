@@ -44,7 +44,7 @@ namespace FinnanceApp.Server.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login (UserLogin request)
         {
-            var response = await _authRepo.Login(request.Email,request.Password);
+            var response = await _authRepo.Login(request.Email,request.Password,request.RememberMe);
             if (!response.isSuccess)
             {
                 return BadRequest(response);
