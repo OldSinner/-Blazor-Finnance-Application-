@@ -1,0 +1,16 @@
+﻿using FinnanceApp.Shared.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace FinnanceApp.Server.Data
+{
+    public interface IAuthRepo
+    {
+        Task<ServiceResponse<int>> Register(User user, string password);
+        Task<bool> UserExist(string email);
+        Task<ServiceResponse<string>> Login(string email, string passowrd);
+        Task<ServiceResponse<string>> activatte(string key);
+    }
+}

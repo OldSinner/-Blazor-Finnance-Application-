@@ -4,12 +4,13 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # User-specific files
+**\appsettings.json
 *.rsuser
 *.suo
 *.user
 *.userosscache
 *.sln.docstates
-
+*.db
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 
@@ -338,3 +339,4 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+template.config.js
