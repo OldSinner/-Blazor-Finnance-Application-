@@ -1,0 +1,106 @@
+
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager navigationManager
+@inject FinnanceApp.Client.Services.IShopService ShopService
+
+@implements IDisposable
+@attribute [Authorize]
+
+<table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th id="a">Nazwa Sklepu</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (FinnanceApp.Shared.Models.Shops entry in ShopService.Shops)
+        {
+            <tr>
+                <td>@entry.name</td>
+                <td>
+                    <button class="btn btn-primary" @onclick="@(() => EditShop(entry.id,entry.name))">Edytuj</button>
+                    <button class="btn btn-danger" @onclick="@(() => DeleteShop(entry.id,entry.name))">Usuń</button>
+                </td>
+
+            </tr>
+        }
+        <tr>
+            <td>
+                <input type="text" @bind="shopname" id="addShopname" name="name" placeholder="Nowy Sklep">
+            </td>
+
+            <td>
+                <button class="btn btn-primary" @onclick="@(() => addShop(shopname))">Dodaj</button>
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+
+<ConfirmComp Title=@("Usunięcie Sklepu") Message=@($"Czy chcesz usunąć {deleteName}? Spowoduje to usunięcie wszystkich przypisanych rachunków.") 
+ConfirmChanged="ConfirmDeleteClick" @ref="DeleteConfirmation"></ConfirmComp>
+
+<EditComp Title=@("Edycja Sklepu") Message=@($"Podaj nową nazwe dla {editName}.") 
+ConfirmChanged="EditDeleteClick" @ref="EditConfirmation"></EditComp>  
+
+
+@code {
+    protected Modal DeleteConfirmation {get; set;}
+    protected EditModal EditConfirmation {get; set;}
+    private string shopname {get; set;}
+    private int deleteid {get; set;}
+    private int editid {get;set;}
+    private string editName {get;set;}
+    private string deleteName {get; set;}
+   
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await ShopService.GetShopList();
+        ShopService.OnChange += StateHasChanged;
+    }
+
+    public void DeleteShop(int id, string name)
+    {
+     deleteName=name;
+     deleteid=id;
+     DeleteConfirmation.Show();
+     
+    }
+    public void EditShop(int id, string name)
+    {
+     editName=name;
+     editid=id;
+     EditConfirmation.Show();
+     
+    }
+    protected async Task ConfirmDeleteClick(bool confirm)
+    {
+        if(confirm)
+        {
+         await ShopService.DeleteShop(deleteid);
+        }
+    }
+    protected async Task EditDeleteClick(string result)
+    {
+        if(!String.IsNullOrWhiteSpace(result))
+        {
+         await ShopService.editShop(editid,result);
+        }
+    }
+    async void addShop(string name)
+    {
+        shopname = null;
+        var result = await ShopService.addShop(name);
+    }
+   
+    
+    public void Dispose()
+    {
+        ShopService.OnChange -= StateHasChanged;
+           }
+
+       
+}

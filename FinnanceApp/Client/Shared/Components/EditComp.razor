@@ -1,0 +1,33 @@
+@inherits EditModal
+@if(Confirm)
+{
+<div class="modal fade show d-block" id="exampleModal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">@Title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="() => OnConfirmChange(String.Empty)">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        @Message
+        <input type="text" class="form-control form-control-user" @bind-value="name" >   
+                                             
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => OnConfirmChange(String.Empty)">Anuluj </button>
+        <button type="button" class="btn btn-primary"@onclick="() => OnConfirmChange(name)">Potwierdź</button>
+      </div>
+    </div>
+  </div>
+</div>
+ <div class="modal-backdrop fade show"></div>
+}
+
+<style>
+   .modal
+   {
+       color:black;
+   } 
+</style>
