@@ -1,8 +1,7 @@
 
 @inject AuthenticationStateProvider AuthStateProvider
 @inject NavigationManager navigationManager
-@inject FinnanceApp.Client.Services.IShopService ShopService
-
+@inject FinnanceApp.Client.Services.IPersonService PersonService
 @implements IDisposable
 @attribute [Authorize]
 
@@ -10,19 +9,19 @@
 
     <thead>
         <tr>
-            <th id="a">Nazwa Sklepu</th>
+            <th id="a">Nazwa Płatnika</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (FinnanceApp.Shared.Models.Shops entry in ShopService.Shops)
+        @foreach (FinnanceApp.Shared.Models.Person entry in PersonService.People)
         {
             <tr>
                 <td>@entry.name</td>
                 <td>
-                    <a @onclick="@(() => EditShop(entry.id,entry.name))"  class="btn btn-info btn-circle">
-                                        <i style="color:white;" class="far fa-edit"></i>  </a>
-                    <a @onclick="@(() => DeleteShop(entry.id,entry.name))" class="btn btn-danger btn-circle">
+                    <a @onclick="@(() => EditPerson(entry.id,entry.name))"  class="btn btn-info btn-circle">
+                                        <i style="color:white;" class="far fa-edit"></i>   </a>
+                    <a @onclick="@(() => DeletePerson(entry.id,entry.name))" class="btn btn-danger btn-circle">
                                         <i style="color:white;" class="fas fa-trash"></i>  </a>
                 </td>
 
@@ -30,29 +29,30 @@
         }
         <tr>
             <td>
-                <input type="text" @bind="shopname" id="addShopname" name="name" placeholder="Nowy Sklep">
+                <input type="text" @bind="personName" name="name" placeholder="Nowy Płatnik">
             </td>
 
             <td>
-                <a @onclick="@(() => addShop(shopname))" class="btn btn-success btn-circle">
+                <a @onclick="@(() => addPerson(personName))" class="btn btn-success btn-circle">
                                         <i style="color:white;" class="fas fa-check"></i> </a>
-                                        </td>
+                                
+            </td>
         </tr>
     </tbody>
 
 </table>
 
-<ConfirmComp Title=@("Usunięcie Sklepu") Message=@($"Czy chcesz usunąć {deleteName}? Spowoduje to usunięcie wszystkich przypisanych rachunków.") 
+<ConfirmComp Title=@("Usunięcie Płatnika") Message=@($"Czy chcesz usunąć {deleteName}? Spowoduje to usunięcie wszystkich przypisanych rachunków.") 
 ConfirmChanged="ConfirmDeleteClick" @ref="DeleteConfirmation"></ConfirmComp>
 
-<EditComp Title=@("Edycja Sklepu") Message=@($"Podaj nową nazwe dla {editName}.") 
+<EditComp Title=@("Edycja Płatika") Message=@($"Podaj nową nazwe dla {editName}.") 
 ConfirmChanged="EditDeleteClick" @ref="EditConfirmation"></EditComp>  
 
 
 @code {
     protected Modal DeleteConfirmation {get; set;}
     protected EditModal EditConfirmation {get; set;}
-    private string shopname {get; set;}
+    private string personName {get; set;}
     private int deleteid {get; set;}
     private int editid {get;set;}
     private string editName {get;set;}
@@ -61,18 +61,18 @@ ConfirmChanged="EditDeleteClick" @ref="EditConfirmation"></EditComp>
     
     protected override async Task OnInitializedAsync()
     {
-        await ShopService.GetShopList();
-        ShopService.OnChange += StateHasChanged;
+        await PersonService.GetPersonList();
+        PersonService.OnChange += StateHasChanged;
     }
 
-    public void DeleteShop(int id, string name)
+    public void DeletePerson(int id, string name)
     {
      deleteName=name;
      deleteid=id;
      DeleteConfirmation.Show();
      
     }
-    public void EditShop(int id, string name)
+    public void EditPerson(int id, string name)
     {
      editName=name;
      editid=id;
@@ -83,26 +83,26 @@ ConfirmChanged="EditDeleteClick" @ref="EditConfirmation"></EditComp>
     {
         if(confirm)
         {
-         await ShopService.DeleteShop(deleteid);
+         await PersonService.deletePerson(deleteid);
         }
     }
     protected async Task EditDeleteClick(string result)
     {
         if(!String.IsNullOrWhiteSpace(result))
         {
-         await ShopService.editShop(editid,result);
+         await PersonService.editPerson(editid,result);
         }
     }
-    async void addShop(string name)
+    async void addPerson(string name)
     {
-        shopname = null;
-        var result = await ShopService.addShop(name);
+        personName = null;
+        var result = await PersonService.addPerson(name);
     }
    
     
     public void Dispose()
     {
-        ShopService.OnChange -= StateHasChanged;
+        PersonService.OnChange -= StateHasChanged;
            }
 
        

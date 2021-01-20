@@ -38,7 +38,7 @@ namespace FinnanceApp.Server.Migrations
                 table: "Roles",
                 columns: new[] { "id", "RoleName" },
                 values: new object[] { 2, "Admin" });
-
+            
             migrationBuilder.AddForeignKey(
                 name: "FK_Users_Roles_roleId",
                 table: "Users",

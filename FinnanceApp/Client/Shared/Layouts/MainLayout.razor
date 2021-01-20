@@ -1,6 +1,8 @@
 @inherits LayoutComponentBase
 @inject IJSRuntime JsRunTime
+@inject Blazored.LocalStorage.ILocalStorageService _localStorage
 @namespace FinnanceApp.Client.Shared.Layouts
+@using System.Security.Claims
 @layout EmptyLayout
     <AuthorizeView Roles="Admin">
         <div class="sidebar-heading">
@@ -117,8 +119,9 @@
                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <span class="mr-2 d-none d-lg-inline text-gray-600 small">@context.User.Identity.Name</span>
                                             <img class="img-profile rounded-circle"
-                                                 src="img/undraw_profile.svg">
-                                        </a>
+                                                 src="@GetUserAvatar(@context.User.Claims.FirstOrDefault().Value)">
+                                                 
+                                                                                         </a>
 
                                     </li>
 
@@ -159,5 +162,8 @@
 
     @code
 {
-
+     string GetUserAvatar(string id)
+     {
+        return "Avatars/avatar_" + id+".jpg";
+     }
     }
