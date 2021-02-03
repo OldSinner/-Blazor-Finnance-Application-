@@ -4,6 +4,7 @@
 @namespace FinnanceApp.Client.Shared.Layouts
 @using System.Security.Claims
 @layout EmptyLayout
+
 <AuthorizeView Roles="Admin">
     <div class="sidebar-heading">
         Admin Panel
@@ -25,6 +26,7 @@
 </AuthorizeView>
 <AuthorizeView>
     <Authorized>
+        
 
         <body id="page-top">
 
@@ -103,18 +105,6 @@
                             <ul class="navbar-nav ml-auto">
 
 
-
-                                <!-- Nav Item - Alerts -->
-                                <li class="nav-item dropdown no-arrow mx-1">
-                                    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                        <i class="fas fa-bell fa-fw"></i>
-                                        <!-- Counter - Alerts -->
-                                        <span class="badge badge-danger badge-counter">3+</span>
-                                        <!-- Powiadomienia Numer!-->
-                                    </a>
-                                </li>
-
                                 <!-- Nav Item - User Information -->
                                 <li class="nav-item dropdown no-arrow">
                                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -123,7 +113,7 @@
                                             class="mr-2 d-none d-lg-inline text-gray-600 small">@context.User.Identity.Name</span>
                                         <img class="img-profile rounded-circle"
                                             src="@GetUserAvatar(@context.User.Claims.FirstOrDefault().Value)"
-                                            onerror="this.src='Avatars/avatar_0.jpg';">
+                                            onerror="this.src='Avatars/avatar_0.jpg';" @onclick="ShowModal">
 
                                     </a>
 
@@ -160,14 +150,20 @@
         </body>
     </Authorized>
     <NotAuthorized>
-        <UnAuthorized></UnAuthorized>
+        <FinnanceApp.Client.Pages.Redirect.RedirectToLogin></FinnanceApp.Client.Pages.Redirect.RedirectToLogin>
     </NotAuthorized>
 </AuthorizeView>
+<ProfileModal @ref="profModal"></ProfileModal>
 
 @code
 {
+    protected ProfModal profModal {get;set;}
     string GetUserAvatar(string id)
     {
         return "Avatars/avatar_" + id + ".jpg";
+    }
+    void ShowModal()
+    {
+      profModal.showModal();
     }
 }

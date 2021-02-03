@@ -1,0 +1,14 @@
+@inject Blazored.LocalStorage.ILocalStorageService LocalStorage
+@inject NavigationManager nav
+@layout EmptyLayout
+@page "/logout"
+
+Bye!
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await LocalStorage.RemoveItemAsync("AuthToken");
+        nav.NavigateTo("/login");
+    }
+}

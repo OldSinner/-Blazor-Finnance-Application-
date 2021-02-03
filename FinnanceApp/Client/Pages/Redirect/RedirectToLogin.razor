@@ -1,0 +1,11 @@
+@inject NavigationManager _nav
+@layout EmptyLayout
+Redirecting...
+
+@code
+{
+    protected override async Task OnInitializedAsync()
+    {
+        _nav.NavigateTo("/login");
+    }
+}

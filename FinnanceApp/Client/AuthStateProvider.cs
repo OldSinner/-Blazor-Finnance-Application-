@@ -41,7 +41,7 @@ namespace FinnanceApp.Client
                 }
                 catch (Exception)
                 {
-                    await _localStorage.RemoveItemAsync("autkToken");
+                    await _localStorage.RemoveItemAsync("AuthToken");
                     identity = new ClaimsIdentity();
                 }
             }
