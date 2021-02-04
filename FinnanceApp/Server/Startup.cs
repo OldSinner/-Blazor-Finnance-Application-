@@ -41,6 +41,7 @@ namespace FinnanceApp.Server
             services.AddDbContext<DataContext>(x => x.UseSqlite(Configuration.GetConnectionString("SqlLiteDb")));
             services.AddControllersWithViews();
             services.AddRazorPages();
+            
             services.AddScoped<IAuthRepo, AuthRepo>();
             services.AddScoped<IBillService, BillService>();
             services.AddScoped<IEmailSender, EmailSender>();
@@ -49,6 +50,7 @@ namespace FinnanceApp.Server
             services.AddScoped<IUtilityService, UtilityService>();
             services.AddScoped<ICardService,CardService>();
             services.AddScoped<IMontlyService,MontlyService>();
+            services.AddHostedService<MontlyBillService>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(optins =>
                 {

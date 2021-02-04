@@ -8,5 +8,7 @@ namespace FinnanceApp.Server.Services.MontlyService
       Task<ServiceResponse<string>> AddMontlyBill(MontlyBills bill);
       Task<ServiceResponse<string>> EditMontyBill(MontlyBills bill);
       Task<ServiceResponse<string>> DeleteMontlyBill(MontlyBills bill);
+
+      Task AddBillsFromMontlyBill();
     }
 }
