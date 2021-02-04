@@ -3,7 +3,7 @@
 @inject Blazored.LocalStorage.ILocalStorageService _localStorage
 @namespace FinnanceApp.Client.Shared.Layouts
 @using System.Security.Claims
-@layout EmptyLayout
+
 
 <AuthorizeView Roles="Admin">
     <div class="sidebar-heading">
@@ -24,6 +24,7 @@
 
     </li>
 </AuthorizeView>
+
 <AuthorizeView>
     <Authorized>
 
@@ -162,7 +163,7 @@
         </body>
     </Authorized>
     <NotAuthorized>
-       
+       <FinnanceApp.Client.Pages.Redirect.RedirectToLogin></FinnanceApp.Client.Pages.Redirect.RedirectToLogin>
     </NotAuthorized>
 </AuthorizeView>
 

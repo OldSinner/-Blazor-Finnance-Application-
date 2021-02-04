@@ -1,5 +1,6 @@
 ﻿using FinnanceApp.Server.Services;
 using FinnanceApp.Shared.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
@@ -136,8 +137,9 @@ namespace FinnanceApp.Server.Data
             return jwt;
         }
 
-        public async Task<ServiceResponse<string>> activatte(string key)
+        public async Task<ServiceResponse<string>> activatte([FromBody]string key)
         {
+            Console.WriteLine("klucz: " + key);
             var user = await _context.Users.FirstOrDefaultAsync(x => x.activationkey == key);
             if (user == null)
             {

@@ -1,10 +1,9 @@
 @inject NavigationManager _nav
-@layout EmptyLayout
 Redirecting...
 
 @code
 {
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
         _nav.NavigateTo("/login");
     }

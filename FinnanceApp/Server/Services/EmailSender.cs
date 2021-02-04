@@ -48,14 +48,14 @@ namespace FinnanceApp.Server.Services
             MailAddress reciver = new MailAddress(email, "New Account!");
             
 
-
+            string url = _config.GetValue<string>("Passwords:domain");
             MailMessage message = new MailMessage()
             {
                 From = basic,
                 Subject = "Aktywuj konto na platformie OS!",
                 Body = $"Witaj w Serwisie OSFinnaneApp!\n\n" +
                 $"Został już Ci tylko ostatni krok przed dołączeniem!\n" +
-                $"Aktywuj swoje konto używając linku: https://localhost:5001/activation/{key}" +
+                $"Aktywuj swoje konto używając linku: {url}activate/{key}" +
                 "\n\n\n Z poważaniem \n OSFinnance App"
             };
             message.To.Add(reciver);

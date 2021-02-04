@@ -56,8 +56,9 @@ namespace FinnanceApp.Server.Controllers
         }
 
         [HttpPost("activate")]
-        public async Task<IActionResult> Activate(string key)
+        public async Task<IActionResult> Activate([FromBody]string key)
         {
+            Console.WriteLine("Klucz który dostałem:"+key);
             var response = await _authRepo.activatte(key);
             if (!response.isSuccess)
             {

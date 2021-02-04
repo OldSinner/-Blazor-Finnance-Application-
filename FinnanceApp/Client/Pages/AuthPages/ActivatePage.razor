@@ -1,0 +1,24 @@
+@page "/activate/{key}"
+@namespace FinnanceApp.Client.Pages.AuthPages
+@layout EmptyLayout
+@inject FinnanceApp.Client.Services.IAuthService _authService
+@inject NavigationManager _navManager
+<p>@text</p>
+
+@code{
+    [Parameter]
+    public string key {get;set;}
+    string text {get;set;} = "Aktywacja konta...";
+    protected override async Task OnInitializedAsync()
+    {
+      var response = await _authService.activate(key);
+      if(response.isSuccess)
+      {
+          text = response.Message;
+         _navManager.NavigateTo("Login");
+      }
+      else{
+          text = response.Message;
+      }
+    }
+}

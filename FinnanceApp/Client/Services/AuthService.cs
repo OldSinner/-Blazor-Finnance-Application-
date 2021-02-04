@@ -19,8 +19,8 @@ namespace FinnanceApp.Client.Services
 
         public async Task<ServiceResponse<string>> activate(string key)
         {
-
-            var result = await _http.PostAsJsonAsync("api/user/activate", key);
+            Console.WriteLine(key);
+            var result = await _http.PostAsJsonAsync<string>("api/user/activate", key);
             Console.WriteLine("Sended");
             return await result.Content.ReadFromJsonAsync<ServiceResponse<string>>();
         }
@@ -46,7 +46,7 @@ namespace FinnanceApp.Client.Services
         }
         public async Task<ServiceResponse<int>> EditProfile(EditProfile profile)
         {
-            var result = await _http.PostAsJsonAsync("api/user/edit",profile);
+            var result = await _http.PostAsJsonAsync("api/user/edit", profile);
             return await result.Content.ReadFromJsonAsync<ServiceResponse<int>>();
         }
 
