@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 
@@ -24,5 +25,6 @@ namespace FinnanceApp.Client.Models
             Confirm=false;
             await ConfirmChanged.InvokeAsync(value);
         }
+        
     }
 }

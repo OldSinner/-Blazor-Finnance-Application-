@@ -2,6 +2,7 @@ using FinnanceApp.Server.Data;
 using FinnanceApp.Server.Services;
 using FinnanceApp.Server.Services.BillService;
 using FinnanceApp.Server.Services.CardService;
+using FinnanceApp.Server.Services.MontlyService;
 using FinnanceApp.Server.Services.PersonService;
 using FinnanceApp.Server.Services.ShopService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -47,6 +48,7 @@ namespace FinnanceApp.Server
             services.AddScoped<IShopService, ShopService>();
             services.AddScoped<IUtilityService, UtilityService>();
             services.AddScoped<ICardService,CardService>();
+            services.AddScoped<IMontlyService,MontlyService>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(optins =>
                 {

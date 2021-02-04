@@ -10,14 +10,15 @@ namespace FinnanceApp.Server.Data
     {
         public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            
+
         }
-        
+
         public DbSet<User> Users { get; set; }
         public DbSet<Shops> Shops { get; set; }
         public DbSet<Person> Person { get; set; }
         public DbSet<Bills> Bills { get; set; }
         public DbSet<Roles> Roles { get; set; }
+        public DbSet<MontlyBills> MontlyBills { get; set; }
 
 
     }

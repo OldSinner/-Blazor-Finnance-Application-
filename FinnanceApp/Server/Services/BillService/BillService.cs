@@ -25,6 +25,7 @@ namespace FinnanceApp.Server.Services.BillService
             var user = await _utilityService.GetUser();
             bill.Shop = await _context.Shops.FirstOrDefaultAsync(x => x.id == bill.ShopId);
             bill.Person = await _context.Person.FirstOrDefaultAsync(x => x.id == bill.PersonId);
+
             if (bill.Shop == null)
             {
                 response.isSuccess = false;
@@ -75,6 +76,7 @@ namespace FinnanceApp.Server.Services.BillService
             var user = await _utilityService.GetUser();
             var bills = await _context.Bills.Where(x => x.Owner.id == user.id).Include(entity => entity.Shop).Include(entity => entity.Person).ToListAsync();
             response.isSuccess = true;
+            Console.WriteLine(bills.Count);
             response.Message = "Załadowano listę sklepów";
             response.Data = bills;
             return response;
