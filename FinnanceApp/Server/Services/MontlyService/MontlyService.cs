@@ -1,10 +1,10 @@
 using System;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using FinnanceApp.Server.Data;
 using FinnanceApp.Server.Services.BillService;
 using FinnanceApp.Shared.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace FinnanceApp.Server.Services.MontlyService
 {
@@ -58,7 +58,7 @@ namespace FinnanceApp.Server.Services.MontlyService
             await _context.SaveChangesAsync();
             return new ServiceResponse<string>
             {
-                Data = "ok",
+                Data = String.Empty,
                 isSuccess = true,
                 Message = "Usunięto rachunek miesięczny!"
             };
@@ -68,11 +68,20 @@ namespace FinnanceApp.Server.Services.MontlyService
         public async Task<ServiceResponse<string>> DeleteMontlyBill(MontlyBills bill)
         {
             var dBill = await _context.MontlyBills.Where(x => x.id == bill.id).FirstOrDefaultAsync();
+            if (dBill == null)
+            {
+                return new ServiceResponse<string>
+                {
+                    Data = String.Empty,
+                    isSuccess = false,
+                    Message = "Wystąpił błąd, nie znaleziono rachunku!"
+                };
+            }
             _context.MontlyBills.Remove(dBill);
             await _context.SaveChangesAsync();
             return new ServiceResponse<string>
             {
-                Data = "ok",
+                Data = String.Empty,
                 isSuccess = true,
                 Message = "Usunięto rachunek miesięczny!"
             };
@@ -81,11 +90,20 @@ namespace FinnanceApp.Server.Services.MontlyService
         public async Task<ServiceResponse<string>> EditMontyBill(MontlyBills bill)
         {
             var dBill = await _context.MontlyBills.Where(x => x.id == bill.id).FirstOrDefaultAsync();
+            if (dBill == null)
+            {
+                return new ServiceResponse<string>
+                {
+                    Data = String.Empty,
+                    isSuccess = false,
+                    Message = "Wystąpił błąd, nie znaleziono rachunku!"
+                };
+            }
             _context.MontlyBills.Update(bill);
             await _context.SaveChangesAsync();
             return new ServiceResponse<string>
             {
-                Data = "ok",
+                Data = String.Empty,
                 isSuccess = true,
                 Message = "Zedytowano rachunek miesięczny"
             };

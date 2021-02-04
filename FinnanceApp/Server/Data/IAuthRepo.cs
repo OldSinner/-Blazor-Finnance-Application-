@@ -14,5 +14,9 @@ namespace FinnanceApp.Server.Data
         Task<ServiceResponse<string>> activatte(string key);
 
         Task<ServiceResponse<int>> EditProfile(EditProfile profile);
+
+        Task<ServiceResponse<string>> DeleteUser(User user);
+
+        Task DeleteInactiveUser();
     }
 }

@@ -21,6 +21,8 @@ namespace FinnanceApp.Shared.Models
         public int roleId { get; set; } = 1;
         public Roles role { get; set; } 
 
+        public DateTime lastLogged {get;set;} = DateTime.Now;
+
 
     }
 }

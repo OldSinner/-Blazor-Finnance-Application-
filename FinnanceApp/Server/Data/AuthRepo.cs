@@ -1,4 +1,7 @@
 ﻿using FinnanceApp.Server.Services;
+using FinnanceApp.Server.Services.BillService;
+using FinnanceApp.Server.Services.PersonService;
+using FinnanceApp.Server.Services.ShopService;
 using FinnanceApp.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,11 +23,13 @@ namespace FinnanceApp.Server.Data
         private readonly IConfiguration _configuration;
         private readonly IEmailSender _emailSender;
 
+
         public AuthRepo(DataContext context, IConfiguration configuration, IEmailSender emailSender)
         {
             _context = context;
             _configuration = configuration;
             _emailSender = emailSender;
+            
         }
 
         public async Task<ServiceResponse<string>> Login(string email, string passowrd, bool RememberMe)
@@ -48,6 +53,9 @@ namespace FinnanceApp.Server.Data
             }
             else
             {
+                user.lastLogged = DateTime.Now;
+                _context.Users.Update(user);
+                await _context.SaveChangesAsync();
                 response.Data = CreateToken(user, RememberMe);
                 response.Message = "Zalogowano!";
             }
@@ -137,7 +145,7 @@ namespace FinnanceApp.Server.Data
             return jwt;
         }
 
-        public async Task<ServiceResponse<string>> activatte([FromBody]string key)
+        public async Task<ServiceResponse<string>> activatte([FromBody] string key)
         {
             Console.WriteLine("klucz: " + key);
             var user = await _context.Users.FirstOrDefaultAsync(x => x.activationkey == key);
@@ -172,6 +180,15 @@ namespace FinnanceApp.Server.Data
         public async Task<ServiceResponse<int>> EditProfile(EditProfile profile)
         {
             var user = await _context.Users.Where(x => x.Email == profile.Email).FirstOrDefaultAsync();
+            if(user == null)
+            {
+                return new ServiceResponse<int>
+                {
+                    Data = 0,
+                    isSuccess = false,
+                    Message = "Wystąpił błąd!"
+                };
+            }
             if (!VerifyPassword(profile.Password, user.PasswordHash, user.PasswordSalt))
             {
                 return new ServiceResponse<int>
@@ -181,7 +198,7 @@ namespace FinnanceApp.Server.Data
                     Message = "Niepoprawne hasło!"
                 };
             }
-            if(isWhiteSpace(profile.Username))
+            if (isWhiteSpace(profile.Username))
             {
                 return new ServiceResponse<int>
                 {
@@ -201,14 +218,64 @@ namespace FinnanceApp.Server.Data
                 Message = "Dokonano zmian! Zaloguj się ponownie, by zmiany były widoczne!"
             };
         }
-        private bool isWhiteSpace(string str )
+        private bool isWhiteSpace(string str)
         {
-           for (int i = 0;i<str.Length ; i++)
-           {
-               if(str[i]==' ')
-               return true;
-           }
-           return false;
+            for (int i = 0; i < str.Length; i++)
+            {
+                if (str[i] == ' ')
+                    return true;
+            }
+            return false;
+        }
+
+        public async Task<ServiceResponse<string>> DeleteUser(User user)
+        {
+            var _user = await _context.Users.Where(x => x.id == user.id).FirstOrDefaultAsync();
+            if (_user == null)
+            {
+                return new ServiceResponse<string>
+                {
+                    Data = String.Empty,
+                    isSuccess = false,
+                    Message = "Nie znaleziono tego użytkownika."
+                };
+            }
+            var bills = await _context.Bills.Where(x => x.OwnerId == _user.id).ToListAsync();
+            foreach(var bill in bills)
+            {
+                _context.Bills.Remove(bill);
+            }
+            var shops = await _context.Shops.Where(x => x.Owner.id == _user.id).ToListAsync();
+            foreach(var shop in shops)
+            {
+                _context.Shops.Remove(shop);
+            }
+            var people = await _context.Person.Where(x => x.Owner.id == _user.id).ToListAsync();
+            foreach(var person in people)
+            {
+                _context.Person.Remove(person);
+            }
+            _context.Users.Remove(_user);
+            await _context.SaveChangesAsync();
+            return new ServiceResponse<string>
+                {
+                    Data = String.Empty,
+                    isSuccess = true,
+                    Message = "Użytkownik został usunięty"
+                };
+
+        }
+
+        public async Task DeleteInactiveUser()
+        {
+            var users = await _context.Users.ToListAsync();
+            foreach (var user in users)
+            {
+                if(user.lastLogged < DateTime.Now.AddMonths(-3) && user.roleId != 2)
+                {
+                    await DeleteUser(user);
+                }
+            }
         }
     }
 }

@@ -51,6 +51,7 @@ namespace FinnanceApp.Server
             services.AddScoped<ICardService,CardService>();
             services.AddScoped<IMontlyService,MontlyService>();
             services.AddHostedService<MontlyBillService>();
+            services.AddHostedService<UserControllService>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(optins =>
                 {

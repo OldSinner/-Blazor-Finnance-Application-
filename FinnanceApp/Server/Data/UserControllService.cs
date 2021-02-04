@@ -1,3 +1,4 @@
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -8,17 +9,17 @@ using FinnanceApp.Server.Data;
 
 namespace FinnanceApp.Server.Services.MontlyService
 {
-    public class MontlyBillService : IHostedService
+    public class UserControllService : IHostedService
     {
         private readonly IServiceScopeFactory _scopeFactory;
         public Timer _timer;
-        public MontlyBillService(IServiceScopeFactory scopeFactory)
+        public UserControllService(IServiceScopeFactory scopeFactory)
         {
             _scopeFactory = scopeFactory;
         }
         public Task StartAsync(CancellationToken cancellationToken)
         {
-            _timer = new Timer(test, null, TimeSpan.Zero, TimeSpan.FromHours(24));
+            _timer = new Timer(Run, null, TimeSpan.Zero, TimeSpan.FromHours(24));
             return Task.CompletedTask;
 
         }
@@ -30,17 +31,13 @@ namespace FinnanceApp.Server.Services.MontlyService
             return Task.CompletedTask;
         }
 
-        private async void test(object state)
+        private async void Run(object state)
         {
             using (var scope = _scopeFactory.CreateScope())
             {
-                var _montlyService = scope.ServiceProvider.GetRequiredService<IMontlyService>();
-                await _montlyService.AddBillsFromMontlyBill();
                 var _userService = scope.ServiceProvider.GetRequiredService<IAuthRepo>();
                 await _userService.DeleteInactiveUser();
-
             }
-
         }
     }
 }
