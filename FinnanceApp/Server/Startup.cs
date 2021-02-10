@@ -2,6 +2,7 @@ using FinnanceApp.Server.Data;
 using FinnanceApp.Server.Services;
 using FinnanceApp.Server.Services.BillService;
 using FinnanceApp.Server.Services.CardService;
+using FinnanceApp.Server.Services.ChartService;
 using FinnanceApp.Server.Services.MontlyService;
 using FinnanceApp.Server.Services.PersonService;
 using FinnanceApp.Server.Services.ShopService;
@@ -50,6 +51,7 @@ namespace FinnanceApp.Server
             services.AddScoped<IUtilityService, UtilityService>();
             services.AddScoped<ICardService,CardService>();
             services.AddScoped<IMontlyService,MontlyService>();
+            services.AddScoped<IChartService,ChartService>();
             services.AddHostedService<MontlyBillService>();
             services.AddHostedService<UserControllService>();
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

@@ -37,6 +37,7 @@ namespace FinnanceApp.Client
             builder.Services.AddScoped<IShopService, ShopService>();
             builder.Services.AddScoped<NotificationService>();
             builder.Services.AddScoped<ICardService,CardService>();
+            builder.Services.AddScoped<IChartService,ChartService>();
             builder.Services.AddOptions();
             builder.Services.AddAuthorizationCore();
             await builder.Build().RunAsync();

@@ -6,27 +6,32 @@
         <FinnanceApp.Client.Pages.Cards.ExpensesCard money="@expenses"></FinnanceApp.Client.Pages.Cards.ExpensesCard>
     </div>
     <div class="col-xl-3 col-md-6 mb-4">
-        <FinnanceApp.Client.Pages.Cards.ExpensesCardWeek money="@exweek"></FinnanceApp.Client.Pages.Cards.ExpensesCardWeek>
+        <FinnanceApp.Client.Pages.Cards.ExpensesCardWeek money="@exweek">
+        </FinnanceApp.Client.Pages.Cards.ExpensesCardWeek>
     </div>
     <div class="col-xl-3 col-md-6 mb-4">
         <FinnanceApp.Client.Pages.Cards.DiffCard money="@diff"></FinnanceApp.Client.Pages.Cards.DiffCard>
     </div>
-     <div class="col-xl-3 col-md-6 mb-4">
-       <FinnanceApp.Client.Pages.Cards.TargetCard prc="@target"></FinnanceApp.Client.Pages.Cards.TargetCard>
+    <div class="col-xl-3 col-md-6 mb-4">
+        <FinnanceApp.Client.Pages.Cards.TargetCard prc="@target"></FinnanceApp.Client.Pages.Cards.TargetCard>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-8 col-lg-7">
+      <FinnanceApp.Client.Shared.Components.MonthChart></FinnanceApp.Client.Shared.Components.MonthChart>
     </div>
 </div>
 @code{
-    double expenses=0;
-    double exweek=0;
-    double diff=0;
-    double target =0;
+    double expenses = 0;
+    double exweek = 0;
+    double diff = 0;
+    double target = 0;
     protected override async Task OnInitializedAsync()
     {
         await _cservice.GetCards();
-        expenses=_cservice.monthSum;
-        exweek=_cservice.weekSum;
-        diff=_cservice.diffSum;
-        target=Math.Round(_cservice.targetSum,0);
+        expenses = _cservice.monthSum;
+        exweek = _cservice.weekSum;
+        diff = _cservice.diffSum;
+        target = Math.Round(_cservice.targetSum, 0);
     }
 }
-
