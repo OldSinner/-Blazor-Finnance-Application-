@@ -75,7 +75,7 @@ namespace FinnanceApp.Server.Services.PersonService
             if (dbperson == null)
             {
                 response.isSuccess = false;
-                response.Message = "Nie znaleziono sklepu. Przeładuj Stronę";
+                response.Message = "Nie znaleziono osoby. Przeładuj Stronę";
             }
             else
             {

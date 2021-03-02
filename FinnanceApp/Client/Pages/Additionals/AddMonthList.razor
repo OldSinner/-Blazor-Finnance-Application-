@@ -46,7 +46,7 @@ else
                     <InputSelect class="form-control" @bind-Value="@mBills.categoryId">
                         @foreach (var category in _category.category)
                         {
-                            <option value="@category.id">@category.name</option>
+                            <option value="@category.id"><i style="color:white;" class="@category.icon_code"></i> @category.name</option>
                         }
                     </InputSelect>
                 </div>

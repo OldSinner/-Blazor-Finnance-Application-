@@ -1,6 +1,7 @@
 ﻿@page "/"
 @layout MainLayout
 @inject FinnanceApp.Client.Services.CardService.ICardService _cservice
+@inject FinnanceApp.Client.Services.IAdditionalService _adService
 <div class="row">
     <div class="col-xl-3 col-md-6 mb-4">
         <FinnanceApp.Client.Pages.Cards.ExpensesCard money="@expenses"></FinnanceApp.Client.Pages.Cards.ExpensesCard>
@@ -16,6 +17,7 @@
         <FinnanceApp.Client.Pages.Cards.TargetCard prc="@target"></FinnanceApp.Client.Pages.Cards.TargetCard>
     </div>
 </div>
+
 <div class="row">
     <div class="col-xl-8 col-lg-7">
       <FinnanceApp.Client.Shared.Components.MonthChart></FinnanceApp.Client.Shared.Components.MonthChart>
