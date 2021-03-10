@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using FinnanceApp.Shared.Models.ChartModels;
 
 namespace FinnanceApp.Client.Services
 {
     public interface IChartService
     {
 
-        IList<string> mLabels { get; set; }
-        IList<double> mValue { get; set; }
+        IList<ChartMonth> chartMonths {get;set;}
 
         Task GetMonthChart();
     }

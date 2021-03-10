@@ -17,6 +17,8 @@
     protected override async Task OnInitializedAsync()
     {
       await _chartService.GetMonthChart();
-      await jsRunTime.InvokeVoidAsync("GenerateMonthChart", _chartService.mLabels,_chartService.mValue);
+      var mLabel = _chartService.chartMonths.Select(x=>x.month).ToList();
+      var mValue = _chartService.chartMonths.Select(x=>x.money).ToList();
+      await jsRunTime.InvokeVoidAsync("GenerateMonthChart", mLabel,mValue);
     }
 }

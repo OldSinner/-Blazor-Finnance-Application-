@@ -11,25 +11,21 @@ namespace FinnanceApp.Client.Services
     {
         private readonly HttpClient _http;
 
-        public IList<string> mLabels { get; set; } = new List<string>();
-        public IList<double> mValue { get; set; } = new List<double>();
         public ChartService(HttpClient http)
         {
             _http = http;
         }
+
+        public IList<ChartMonth> chartMonths  {get;set;} = new List<ChartMonth>();
+
         public async Task GetMonthChart()
         {
-            mLabels.Clear();
-            mValue.Clear();
+            chartMonths.Clear();
             var response = await _http.GetFromJsonAsync<ServiceResponse<List<ChartMonth>>>("api/Chart");
             if (response.isSuccess)
             {
                 response.Data.Reverse();
-                foreach (var obj in response.Data)
-                {
-                  mLabels.Add(obj.month);
-                  mValue.Add(obj.money);
-                }
+                chartMonths = response.Data;
             }
         }
     }

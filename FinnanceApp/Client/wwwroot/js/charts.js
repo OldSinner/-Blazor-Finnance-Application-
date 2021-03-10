@@ -81,3 +81,7 @@ function GenerateMonthChart(mLabels, mValue) {
 
     });
 }
+function GeneratePersonChart(pLabels,pValue)
+{
+  
+}
