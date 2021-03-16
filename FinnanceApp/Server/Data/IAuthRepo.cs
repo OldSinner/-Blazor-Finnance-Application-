@@ -18,5 +18,6 @@ namespace FinnanceApp.Server.Data
         Task<ServiceResponse<string>> DeleteUser(User user);
 
         Task DeleteInactiveUser();
+        
     }
 }

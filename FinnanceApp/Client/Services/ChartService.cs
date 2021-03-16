@@ -18,6 +18,17 @@ namespace FinnanceApp.Client.Services
 
         public IList<ChartMonth> chartMonths  {get;set;} = new List<ChartMonth>();
         public IList<ChartMonth> chartPerson  {get;set;} = new List<ChartMonth>();
+        public IList<ChartMonth> chartCategory { get; set; } = new List<ChartMonth>();
+
+        public async Task GetCategoryChart()
+        {
+            chartCategory.Clear();
+            var response = await _http.GetFromJsonAsync<ServiceResponse<List<ChartMonth>>>("api/Chart/category");
+            if(response.isSuccess)
+            {
+                chartCategory = response.Data;
+            }
+        }
 
         public async Task GetMonthChart()
         {

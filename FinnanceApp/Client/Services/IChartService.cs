@@ -10,7 +10,11 @@ namespace FinnanceApp.Client.Services
         IList<ChartMonth> chartMonths {get;set;}
         IList<ChartMonth> chartPerson {get;set;}
 
+        IList<ChartMonth> chartCategory {get;set;}
+
         Task GetMonthChart();
         Task GetPersonChart();
+
+        Task GetCategoryChart();
     }
 }

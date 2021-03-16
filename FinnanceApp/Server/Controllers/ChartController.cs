@@ -42,6 +42,16 @@ namespace FinnanceApp.Server.Controllers
             }
             return Ok(response);
         }
+        [HttpGet("category")]
+        public async Task<IActionResult> GetCategoryChart()
+        {
+            var response = await _chartService.GetCategoryChart();
+            if (!response.isSuccess)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
 
     }
 }

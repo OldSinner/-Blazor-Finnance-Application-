@@ -23,26 +23,29 @@ namespace FinnanceApp.Server.Services.ChartService
 
         public async Task<ServiceResponse<List<ChartMonth>>> GetCategoryChart()
         {
-             var user = await _utility.GetUser();
-             var categoryList =  await _context.Category.ToListAsync();
-             var list = new List<ChartMonth>();
-             foreach(var category in categoryList)
-             {
-                 double sum=0;
-                 var billsList = await _context.Bills.Where(x=>x.Owner == user && x.Category==category).ToListAsync();
-                 foreach(var bill in billsList)
-                 {
-                     sum += bill.money;
-                 }
-                 if(sum > 0)
-                 {
-                     list.Add(new ChartMonth{
-                         money=sum,
-                         month=category.name
-                     });
-                 }
-             }
-             return new ServiceResponse<List<ChartMonth>>
+            var user = await _utility.GetUser();
+            var categoryList = await _context.Category.ToListAsync();
+            var list = new List<ChartMonth>();
+            foreach (var category in categoryList)
+            {
+                double sum = 0;
+                var billsList = await _context.Bills.Where(x => x.Owner == user && x.Category == category
+                                                            && x.BuyDate.Month == DateTime.Now.Month
+                                                            && x.BuyDate.Year == DateTime.Now.Year).ToListAsync();
+                foreach (var bill in billsList)
+                {
+                    sum += bill.money;
+                }
+                if (sum > 0)
+                {
+                    list.Add(new ChartMonth
+                    {
+                        money = sum,
+                        month = category.name
+                    });
+                }
+            }
+            return new ServiceResponse<List<ChartMonth>>
             {
                 Data = list,
                 isSuccess = true,
@@ -92,11 +95,15 @@ namespace FinnanceApp.Server.Services.ChartService
                 {
                     sum += bill.money;
                 }
-                list.Add(new ChartMonth()
-                {
-                   money = Math.Round(sum,2),
-                    month = person.name
-                });
+                    if (sum > 0)
+                    {
+                        list.Add(new ChartMonth()
+                        {
+                            money = Math.Round(sum, 2),
+                            month = person.name
+                        });
+                    }
+ 
             
             }
             return new ServiceResponse<List<ChartMonth>>
@@ -105,6 +112,8 @@ namespace FinnanceApp.Server.Services.ChartService
                 isSuccess = true,
                 Message = "Załadowano chart!"
             };
+
+              
         }
     }
 }
