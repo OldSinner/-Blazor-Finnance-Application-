@@ -26,5 +26,23 @@ namespace FinnanceApp.Client.Services.AdminService
             }
 
         }
+        public async Task<ServiceResponse<string>> ActivateUser(int id)
+        {
+            var responseMessage = await _http.PostAsJsonAsync("api/admin/activateuser",id);
+            return await responseMessage.Content.ReadFromJsonAsync<ServiceResponse<string>>();
+            
+        }
+         public async Task<ServiceResponse<string>> GrantAdmin(int id)
+        {
+            var responseMessage = await _http.PostAsJsonAsync("api/admin/GrantAdmin",id);
+            return await responseMessage.Content.ReadFromJsonAsync<ServiceResponse<string>>();
+            
+        }
+        public async Task<ServiceResponse<string>> Deactive(int id)
+        {
+            var responseMessage = await _http.PostAsJsonAsync("api/admin/DeactiveUser",id);
+            return await responseMessage.Content.ReadFromJsonAsync<ServiceResponse<string>>();
+            
+        }
     }
 }

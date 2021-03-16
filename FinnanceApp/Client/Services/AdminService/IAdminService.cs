@@ -6,8 +6,11 @@ namespace FinnanceApp.Client.Services.AdminService
 {
     public interface IAdminService
     {
-       IList<User> userList {get;set;}
+        IList<User> userList { get; set; }
 
-       Task GetUserList();
+        Task GetUserList();
+        Task<ServiceResponse<string>> ActivateUser(int id);
+        Task<ServiceResponse<string>> GrantAdmin(int id);
+        Task<ServiceResponse<string>> Deactive(int id);
     }
 }

@@ -2,35 +2,48 @@
 @attribute [Authorize(Roles="Admin")]
 @inject FinnanceApp.Client.Services.AdminService.IAdminService _adminService
 @layout MainLayout
+<Alert Message="@message" MessageType="@messageType"></Alert>
 <table class="table table-striped table-bordered" style="text-align:center;">
-
+    
     <thead>
         <tr>
             <th id="a">Adres-Email</th>
             <th>UserName</th>
             <th>LastLogin</th>
             <th>Role</th>
+            <th>IsActivated</th>
             <th></th>
         </tr>
     </thead>
     <tbody>
         @foreach (var entry in _adminService.userList)
         {
-            <tr>
-                <td>@entry.Email</td>
+            
+            <tr style="color: gray;">
+                @if(entry.lastLogged<DateTime.Now.AddMonths(-3))
+            {<s><td>@entry.Email</td>
                 <td>@entry.Username</td>
                 <td>@entry.lastLogged</td>
                 <td>@entry.role.RoleName</td>
+                <td>@entry.isConfirmed.ToString()</td></s>}
+            else
+            {
+<td>@entry.Email</td>
+                <td>@entry.Username</td>
+                <td>@entry.lastLogged</td>
+                <td>@entry.role.RoleName</td>
+                <td>@entry.isConfirmed.ToString()</td>
+            }
+                
                 <td>
                     <a class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false" style="color:white;">
+                        aria-expanded="false" style="color:white;" aria-disabled="@busy">
                         Take Action
                     </a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item">Activate account</a>
-                        <a class="dropdown-item">Grant Admin</a>
-                        <a class="dropdown-item">Grant User</a>
-                        <a class="dropdown-item">Select as a Inactive</a>
+                        <a class="dropdown-item" @onclick="@(() => ActivateAccount(entry.id))">Activate account</a>
+                        <a class="dropdown-item"  @onclick="@(() => GrantAdmin(entry.id))">Grant Admin</a>
+                        <a class="dropdown-item"  @onclick="@(() => Deactive(entry.id))">Select as a Inactive</a>
 
                     </div>
 
@@ -43,8 +56,60 @@
 
 </table>
 @code{
+    Models.AlertMessageType messageType = Models.AlertMessageType.Success;
+    public string message { get; set; } = String.Empty;
+    private bool busy = false;
     protected override async Task OnInitializedAsync()
     {
         await _adminService.GetUserList();
+    }
+    async void ActivateAccount(int id)
+    {
+        busy = true;
+        var response = await _adminService.ActivateUser(id);
+        Console.WriteLine(response.Message);
+        if (response.isSuccess)
+        {
+            messageType = Models.AlertMessageType.Success;
+            message = response.Message;
+        }
+        else
+        {
+            messageType = Models.AlertMessageType.Error;
+            message = response.Message;
+        }
+        busy=false;
+    }
+    async void GrantAdmin(int id)
+    {
+        busy = true;
+        var response = await _adminService.GrantAdmin(id);
+        if (response.isSuccess)
+        {
+            messageType = Models.AlertMessageType.Success;
+            message = response.Message;
+        }
+        else
+        {
+            messageType = Models.AlertMessageType.Error;
+            message = response.Message;
+        }
+        busy=false;
+    }
+    async void Deactive(int id)
+    {
+        busy = true;
+        var response = await _adminService.Deactive(id);
+        if (response.isSuccess)
+        {
+            messageType = Models.AlertMessageType.Success;
+            message = response.Message;
+        }
+        else
+        {
+            messageType = Models.AlertMessageType.Error;
+            message = response.Message;
+        }
+        busy=false;
     }
 }

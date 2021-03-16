@@ -31,7 +31,7 @@ namespace FinnanceApp.Server.Data
             _context = context;
             _configuration = configuration;
             _emailSender = emailSender;
-            
+
         }
 
         public async Task<ServiceResponse<string>> Login(string email, string passowrd, bool RememberMe)
@@ -65,7 +65,7 @@ namespace FinnanceApp.Server.Data
                 response.Message = "Zalogowano!";
                 Log.Information("User:" + email + " Logged");
             }
-            
+
             return response;
 
         }
@@ -189,7 +189,7 @@ namespace FinnanceApp.Server.Data
         public async Task<ServiceResponse<int>> EditProfile(EditProfile profile)
         {
             var user = await _context.Users.Where(x => x.Email == profile.Email).FirstOrDefaultAsync();
-            if(user == null)
+            if (user == null)
             {
                 return new ServiceResponse<int>
                 {
@@ -250,17 +250,17 @@ namespace FinnanceApp.Server.Data
                 };
             }
             var bills = await _context.Bills.Where(x => x.OwnerId == _user.id).ToListAsync();
-            foreach(var bill in bills)
+            foreach (var bill in bills)
             {
                 _context.Bills.Remove(bill);
             }
             var shops = await _context.Shops.Where(x => x.Owner.id == _user.id).ToListAsync();
-            foreach(var shop in shops)
+            foreach (var shop in shops)
             {
                 _context.Shops.Remove(shop);
             }
             var people = await _context.Person.Where(x => x.Owner.id == _user.id).ToListAsync();
-            foreach(var person in people)
+            foreach (var person in people)
             {
                 _context.Person.Remove(person);
             }
@@ -268,11 +268,11 @@ namespace FinnanceApp.Server.Data
             await _context.SaveChangesAsync();
             Log.Information("User deleted: " + user.id + "/" + user.Username);
             return new ServiceResponse<string>
-                {
-                    Data = String.Empty,
-                    isSuccess = true,
-                    Message = "Użytkownik został usunięty"
-                };
+            {
+                Data = String.Empty,
+                isSuccess = true,
+                Message = "Użytkownik został usunięty"
+            };
 
         }
 
@@ -281,9 +281,19 @@ namespace FinnanceApp.Server.Data
             var users = await _context.Users.ToListAsync();
             foreach (var user in users)
             {
-                if(user.lastLogged < DateTime.Now.AddMonths(-3) && user.roleId != 2)
+                if (user.lastLogged < DateTime.Now.AddMonths(-3))
                 {
-                    await DeleteUser(user);
+                    try
+                    {
+                        var response = await DeleteUser(user);
+                    }
+                    catch(Exception x)
+                    {
+                        Log.Error(x.Message);
+                    }
+
+
+
                 }
             }
         }
