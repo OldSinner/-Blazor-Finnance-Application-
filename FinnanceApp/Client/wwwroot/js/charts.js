@@ -155,3 +155,40 @@ function GenerateCategoryChart(cLabels,cValue){
     }
 });
 }
+function GenerateShopChart(sLabels,sValue){
+  var ctx = document.getElementById('donutChartShop').getContext('2d');
+  var myDoughnutChart = new Chart(ctx, {
+   type: 'doughnut',
+    data: {
+        labels: sLabels,
+        datasets: [{
+            data: sValue,
+            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc','#4e73df', '#1cc88a','#4e73df', '#1cc88a','#4e73df', '#1cc88a', '#36b9cc','#4e73df', '#1cc88a','#4e73df', '#1cc88a'],
+            hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf','#2e59d9', '#17a673', '#2c9faf','#2e59d9','#2e59d9', '#17a673', '#2c9faf','#2e59d9', '#17a673', '#2c9faf','#2e59d9'],
+            hoverBorderColor: "rgba(234, 236, 244, 1)",
+        }],
+    },
+    options: {
+      maintainAspectRatio: false,
+      tooltips: {
+        backgroundColor: "rgb(255,255,255)",
+        bodyFontColor: "#858796",
+        borderColor: '#dddfeb',
+        borderWidth: 1,
+        xPadding: 20,
+        yPadding: 20,
+        displayColors: false,
+        caretPadding: 10,
+      },
+      legend: {
+        display: true,
+        position: 'bottom',
+        labels:{
+          fontSize:12,
+          padding:20
+        }
+      },
+      cutoutPercentage: 80,
+    }
+});
+}

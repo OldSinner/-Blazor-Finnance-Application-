@@ -52,6 +52,17 @@ namespace FinnanceApp.Server.Controllers
             }
             return Ok(response);
         }
+        [HttpGet("shop")]
+        public async Task<IActionResult> GetShopChart()
+        {
+            var response = await _chartService.GetShopChart();
+            if (!response.isSuccess)
+            {
+                return BadRequest(response);
+            }
+            return Ok(response);
+        }
+
 
     }
 }

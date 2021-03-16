@@ -15,6 +15,7 @@ namespace FinnanceApp.Server.Services.ChartService
         Task<ServiceResponse<List<ChartMonth>>> GetPersonChart();
 
         Task<ServiceResponse<List<ChartMonth>>> GetCategoryChart();
+        Task<ServiceResponse<List<ChartMonth>>> GetShopChart();
 
     }
 

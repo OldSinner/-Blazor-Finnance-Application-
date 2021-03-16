@@ -115,5 +115,39 @@ namespace FinnanceApp.Server.Services.ChartService
 
               
         }
+        public async Task<ServiceResponse<List<ChartMonth>>> GetShopChart()
+        {
+            var user = await _utility.GetUser();
+            var list = new List<ChartMonth>();
+            var shoplist = await _context.Shops.Where(x => x.Owner == user).ToListAsync();
+
+            foreach (var shop in shoplist)
+            {
+                double sum = 0;
+                var billList = await _context.Bills.Where(x => x.ShopId == shop.id && x.BuyDate.Month == DateTime.Now.Month && x.BuyDate.Year == DateTime.Now.Year).ToListAsync();
+                foreach (var bill in billList)
+                {
+                    sum += bill.money;
+                }
+                    if (sum > 0)
+                    {
+                        list.Add(new ChartMonth()
+                        {
+                            money = Math.Round(sum, 2),
+                            month = shop.name
+                        });
+                    }
+ 
+            
+            }
+            return new ServiceResponse<List<ChartMonth>>
+            {
+                Data = list,
+                isSuccess = true,
+                Message = "Załadowano chart!"
+            };
+
+              
+        }
     }
 }

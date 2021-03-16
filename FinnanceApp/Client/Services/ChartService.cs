@@ -19,6 +19,7 @@ namespace FinnanceApp.Client.Services
         public IList<ChartMonth> chartMonths  {get;set;} = new List<ChartMonth>();
         public IList<ChartMonth> chartPerson  {get;set;} = new List<ChartMonth>();
         public IList<ChartMonth> chartCategory { get; set; } = new List<ChartMonth>();
+        public IList<ChartMonth> chartShop { get; set; } = new List<ChartMonth>();
 
         public async Task GetCategoryChart()
         {
@@ -47,8 +48,17 @@ namespace FinnanceApp.Client.Services
              var response = await _http.GetFromJsonAsync<ServiceResponse<List<ChartMonth>>>("api/Chart/person");
             if (response.isSuccess)
             {
-                response.Data.Reverse();
                 chartPerson = response.Data;
+            }
+        }
+
+        public async Task GetShopChart()
+        {
+            chartShop.Clear();
+             var response = await _http.GetFromJsonAsync<ServiceResponse<List<ChartMonth>>>("api/Chart/shop");
+            if (response.isSuccess)
+            {
+                chartShop = response.Data;
             }
         }
     }
