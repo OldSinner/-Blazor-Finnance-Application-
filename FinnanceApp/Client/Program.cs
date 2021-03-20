@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Tewr.Blazor.FileReader;
 
 namespace FinnanceApp.Client
 {
@@ -28,6 +29,7 @@ namespace FinnanceApp.Client
 
 
             builder.Services.AddBlazoredLocalStorage();
+            builder.Services.AddFileReaderService();
             builder.Services.AddScoped<IAuthService, AuthService>();
             builder.Services.AddScoped<DialogService>();
             builder.Services.AddScoped<NotificationService>();

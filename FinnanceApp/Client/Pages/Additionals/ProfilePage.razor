@@ -1,5 +1,8 @@
 @page "/profile"
 @layout MainLayout
+@using System.IO;
+@using Tewr.Blazor.FileReader
+@inject IFileReaderService _fileService
 @inject FinnanceApp.Client.Services.IAuthService _aService
 @attribute [Authorize]
 <AuthorizeView>
@@ -17,6 +20,7 @@
                                 onerror="this.src='Avatars/avatar_0.jpg';">
                             <h6>Załącz nowy awatar</h6>
                             <input type="file" class="form-control">
+                            <button class="btn btn-block btn-primary" style="margin=5;">Zmień awatar</button>
                         </div>
                     </div>
 
