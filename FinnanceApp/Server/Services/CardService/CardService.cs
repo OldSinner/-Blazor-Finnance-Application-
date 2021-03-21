@@ -20,6 +20,8 @@ namespace FinnanceApp.Server.Services.CardService
         }
         public async Task<ServiceResponse<double>> MonthSum()
         {
+            try
+            {
             var response = new ServiceResponse<double>();
             double sum = 0;
             var user = await _utility.GetUser();
@@ -33,10 +35,21 @@ namespace FinnanceApp.Server.Services.CardService
             response.Message = "MonthSum";
             response.isSuccess = true;
             return response;
+            }catch (Exception x)
+            {
+                return new ServiceResponse<double>
+                {
+                    Data = 0,
+                    Message = x.Message,
+                    isSuccess = false
+                };
+            }
         }
 
         public async Task<ServiceResponse<double>> WeekSum()
         {
+            try
+            {
             var response = new ServiceResponse<double>();
             double sum = 0;
             var user = await _utility.GetUser();
@@ -51,6 +64,15 @@ namespace FinnanceApp.Server.Services.CardService
             response.Message = "WeekSum";
             response.isSuccess = true;
             return response;
+            }catch (Exception x)
+            {
+                return new ServiceResponse<double>
+                {
+                    Data = 0,
+                    Message = x.Message,
+                    isSuccess = false
+                };
+            }
         }
         public static int GetWeekOfMonth(DateTime date)
         {
@@ -64,6 +86,7 @@ namespace FinnanceApp.Server.Services.CardService
 
         public async Task<ServiceResponse<double>> DiffSum()
         {
+            try{
             var actualMonth = await MonthSum();
             DateTime previousMontDate = DateTime.Now.AddMonths(-1);
             double previousMonth = 0;
@@ -81,11 +104,21 @@ namespace FinnanceApp.Server.Services.CardService
                 Message = "DiffSum",
                 isSuccess = true
             };
+            }catch (Exception x)
+            {
+                return new ServiceResponse<double>
+                {
+                    Data = 0,
+                    Message = x.Message,
+                    isSuccess = false
+                };
+            }
 
         }
 
         public async Task<ServiceResponse<double>> TargetSum()
         {
+            try {
             var actualMonth = await MonthSum();
             var user = await _utility.GetUser();
             if(user.targetValue==0)
@@ -97,6 +130,15 @@ namespace FinnanceApp.Server.Services.CardService
                 Message="TargetSum",
                 isSuccess = true
             };
+            }catch (Exception x)
+            {
+                return new ServiceResponse<double>
+                {
+                    Data = 0,
+                    Message = x.Message,
+                    isSuccess = false
+                };
+            }
         }
     }
 }

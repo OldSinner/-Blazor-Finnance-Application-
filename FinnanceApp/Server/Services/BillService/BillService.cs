@@ -22,6 +22,8 @@ namespace FinnanceApp.Server.Services.BillService
 
         public async Task<ServiceResponse<int>> AddBill(Bills bill)
         {
+            try
+            {
             ServiceResponse<int> response = new ServiceResponse<int>();
             var user = await _utilityService.GetUser();
             bill.Shop = await _context.Shops.FirstOrDefaultAsync(x => x.id == bill.ShopId);
@@ -47,12 +49,23 @@ namespace FinnanceApp.Server.Services.BillService
                 response.Message = $"Dodano rachunek o wartości: {Math.Round(bill.money, 2)} zł";
             }
             return response;
-
+            }
+            catch (Exception x)
+            {
+                return new ServiceResponse<int>
+                {
+                    Data = 0,
+                    Message = x.Message,
+                    isSuccess = false
+                };
+            }
 
         }
 
         public async Task<ServiceResponse<int>> DeleteBill(int id)
         {
+            try
+            {
             var user = await _utilityService.GetUser();
             ServiceResponse<int> response = new ServiceResponse<int>();
             var bill = await _context.Bills.FirstOrDefaultAsync(b => b.id == id && b.Owner.id == user.id);
@@ -70,9 +83,20 @@ namespace FinnanceApp.Server.Services.BillService
 
             }
             return response;
+            }
+            catch (Exception x)
+            {
+                return new ServiceResponse<int>
+                {
+                    Data = 0,
+                    Message = x.Message,
+                    isSuccess = false
+                };
+            }
         }
         public async Task<ServiceResponse<List<Bills>>> getBillsListWithPages(int page)
         {
+            try{
             ServiceResponse<List<Bills>> response = new ServiceResponse<List<Bills>>();
             var user = await _utilityService.GetUser();
             var bills = await _context.Bills.Where(x => x.Owner.id == user.id).Include(entity => entity.Shop).Include(entity => entity.Person).Include(entity => entity.Category).OrderByDescending(x => x.BuyDate).Skip(page * 10).Take(10).ToListAsync();
@@ -82,6 +106,16 @@ namespace FinnanceApp.Server.Services.BillService
             response.Message = pages.ToString();
             response.Data = bills;
             return response;
+            }
+            catch (Exception x)
+            {
+                return new ServiceResponse<List<Bills>>
+                {
+                    Data = null,
+                    Message = x.Message,
+                    isSuccess = false
+                };
+            }
 
         }
     }

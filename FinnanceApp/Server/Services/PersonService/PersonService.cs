@@ -29,6 +29,7 @@ namespace FinnanceApp.Server.Services.PersonService
         }
         public async Task<ServiceResponse<int>> AddPerson(string name)
         {
+            try{
             ServiceResponse<int> response = new ServiceResponse<int>();
             Person person = new Person();
             var user = await _utilityService.GetUser();
@@ -55,20 +56,40 @@ namespace FinnanceApp.Server.Services.PersonService
             }
 
             return response;
+            }catch (Exception x)
+            {
+                return new ServiceResponse<int>
+                {
+                    Data = 0,
+                    Message = x.Message,
+                    isSuccess = false
+                };
+            }
         }
 
         public async Task<ServiceResponse<List<Person>>> GetPersonList()
         {
+            try{
             ServiceResponse<List<Person>> response = new ServiceResponse<List<Person>>();
             var user = await _utilityService.GetUser();
             var persons = await _context.Person.Where(x => x.Owner.id == user.id).ToListAsync();
             response.Data = persons;
             response.isSuccess = true;
             return response;
+            }catch (Exception x)
+            {
+                return new ServiceResponse<List<Person>>
+                {
+                    Data = null,
+                    Message = x.Message,
+                    isSuccess = false
+                };
+            }
         }
 
         public async Task<ServiceResponse<string>> DeletePerson(int id)
         {
+            try{
             var user = await _utilityService.GetUser();
             ServiceResponse<string> response = new ServiceResponse<string>();
             Person dbperson = await _context.Person.FirstOrDefaultAsync(u => u.id == id && u.Owner == user);
@@ -90,11 +111,21 @@ namespace FinnanceApp.Server.Services.PersonService
                 response.Message= $"Płatnik {dbperson.name} i {bills.Count} przypisanych rachunków zostały usunięte";
             }
             return response;
+            }catch (Exception x)
+            {
+                return new ServiceResponse<string>
+                {
+                    Data = String.Empty,
+                    Message = x.Message,
+                    isSuccess = false
+                };
+            }
            
         }
 
         public async Task<ServiceResponse<string>> EditPerson(Person person)
         {
+            try{
             ServiceResponse<string> response = new ServiceResponse<string>();
             Person dbperson = await _context.Person.FirstOrDefaultAsync(u => u.id == person.id);
             var user = await _utilityService.GetUser();
@@ -114,6 +145,15 @@ namespace FinnanceApp.Server.Services.PersonService
                 response.Message += dbperson.name; 
             }
             return response;
+            }catch (Exception x)
+            {
+                return new ServiceResponse<string>
+                {
+                    Data = String.Empty,
+                    Message = x.Message,
+                    isSuccess = false
+                };
+            }
             
         }
     }

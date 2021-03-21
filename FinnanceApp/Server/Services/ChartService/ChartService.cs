@@ -23,6 +23,7 @@ namespace FinnanceApp.Server.Services.ChartService
 
         public async Task<ServiceResponse<List<ChartMonth>>> GetCategoryChart()
         {
+            try{
             var user = await _utility.GetUser();
             var categoryList = await _context.Category.ToListAsync();
             var list = new List<ChartMonth>();
@@ -51,11 +52,21 @@ namespace FinnanceApp.Server.Services.ChartService
                 isSuccess = true,
                 Message = "Załadowano chart!"
             };
+            }catch (Exception x)
+            {
+                return new ServiceResponse<List<ChartMonth>>
+                {
+                    Data = null,
+                    Message = x.Message,
+                    isSuccess = false
+                };
+            }
 
         }
 
         public async Task<ServiceResponse<List<ChartMonth>>> GetMonthChart()
         {
+            try{
             var user = await _utility.GetUser();
             var list = new List<ChartMonth>();
             for (int i = 0; i < 6; i++)
@@ -78,11 +89,21 @@ namespace FinnanceApp.Server.Services.ChartService
                 isSuccess = true,
                 Message = "Załadowano chart!"
             };
+            }catch (Exception x)
+            {
+                return new ServiceResponse<List<ChartMonth>>
+                {
+                    Data = null,
+                    Message = x.Message,
+                    isSuccess = false
+                };
+            }
 
         }
 
         public async Task<ServiceResponse<List<ChartMonth>>> GetPersonChart()
         {
+            try{
             var user = await _utility.GetUser();
             var list = new List<ChartMonth>();
             var personlist = await _context.Person.Where(x => x.Owner.id == user.id).ToListAsync();
@@ -112,11 +133,21 @@ namespace FinnanceApp.Server.Services.ChartService
                 isSuccess = true,
                 Message = "Załadowano chart!"
             };
+            }catch (Exception x)
+            {
+                return new ServiceResponse<List<ChartMonth>>
+                {
+                    Data = null,
+                    Message = x.Message,
+                    isSuccess = false
+                };
+            }
 
               
         }
         public async Task<ServiceResponse<List<ChartMonth>>> GetShopChart()
         {
+            try{
             var user = await _utility.GetUser();
             var list = new List<ChartMonth>();
             var shoplist = await _context.Shops.Where(x => x.Owner == user).ToListAsync();
@@ -146,6 +177,15 @@ namespace FinnanceApp.Server.Services.ChartService
                 isSuccess = true,
                 Message = "Załadowano chart!"
             };
+            }catch (Exception x)
+            {
+                return new ServiceResponse<List<ChartMonth>>
+                {
+                    Data = null,
+                    Message = x.Message,
+                    isSuccess = false
+                };
+            }
 
               
         }
