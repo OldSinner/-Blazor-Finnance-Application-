@@ -8,7 +8,7 @@
 @code{
     [Parameter]
     public string key {get;set;}
-    string text {get;set;} = "Aktywacja konta...";
+    string text {get;set;} = "Account Activate....";
     protected override async Task OnInitializedAsync()
     {
       var response = await _authService.activate(key);

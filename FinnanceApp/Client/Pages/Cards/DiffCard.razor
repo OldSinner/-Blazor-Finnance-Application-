@@ -5,8 +5,8 @@
         <div class="row no-gutters align-items-center">
             <div class="col mr-2">
                 <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                    Wydatki (Względem poprzedniego miesiąca) </div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">@money @valuetype </div>
+                    Expenses (Relative to the previous month) </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">@money</div>
             </div>
             <div class="col-auto">
                 <i class="fas fa-chart-line fa-2x text-gray-300"></i>
@@ -22,16 +22,5 @@
     protected override void OnInitialized()
     {
         
-        if (money < 0)
-        {
-            money = -money;
-            valuetype = "zł więcej";
-        }
-        else
-        {
-            
-            valuetype = "zł mniej";
-        }
-
     }
 }

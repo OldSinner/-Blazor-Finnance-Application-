@@ -6,7 +6,7 @@
 @attribute [Authorize]
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Lista Rachunków Miesięcznych</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Montly Bill List</h6>
         <Alert Message="@message" MessageType="@messageType"></Alert>
     </div>
     <div class="card-body">
@@ -14,13 +14,13 @@
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead>
                     <tr>
-                        <th>Nazwa Rachunku</th>
-                        <th>Kwota</th>
-                        <th>Sklep</th>
-                        <th>Płatnik</th>
-                        <th>Dzień miesiąca</th>
-                        <th>Opis</th>
-                        <th>Kategoria</th>
+                        <th>Bill Name</th>
+                        <th>Amount</th>
+                        <th>Shop</th>
+                        <th>Payer</th>
+                        <th>Month Day</th>
+                        <th>Comment</th>
+                        <th>Category</th>
                         <th><a class="btn btn-success btn-circle" href="/monthlist/add"><i style="color:white;"
                                     class="fas fa-plus"></i></a></th>
 

@@ -8,17 +8,17 @@
 @attribute [Authorize]
 @if (_shop.Shops.Count == 0 || _pService.People.Count == 0)
 {
-    <h1>Przed dodaniem rachunku musisz dodać jakiś <a href="list">Sklep I Płatnika </a> </h1>
+    <h1>Before adding an bill, you need to add <a href="list">Shop and Payer </a> </h1>
 }
 else
 {
     <div class="container-fluid">
         <EditForm Model="@bill" OnValidSubmit="HandleAdd">
-            <h1>Dodawanie Rachunku</h1>
+            <h1>Adding Bill</h1>
             <DataAnnotationsValidator />
             <ValidationSummary />
             <div class="form-group">
-                <label for="Money">Kwota</label>
+                <label for="Money">Amount</label>
                 <input type="number" step="0.01" @bind-value="bill.money" class="form-control" />
 
             </div>
@@ -26,7 +26,7 @@ else
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            <label for="startUnitId">Płatnik</label>
+                            <label for="startUnitId">Payer</label>
                             <InputSelect class="form-control" @bind-Value="@bill.PersonId">
                                 @foreach (var person in _pService.People)
                                     {
@@ -37,7 +37,7 @@ else
                     </div>
                     <div class="col">
                         <div class="form-group">
-                            <label for="startUnitId">Sklep</label>
+                            <label for="startUnitId">Shop</label>
                             <InputSelect class="form-control" @bind-Value="@bill.ShopId">
                                 @foreach (var shop in _shop.Shops)
                                     {
@@ -48,7 +48,7 @@ else
                     </div>
                     <div class="col">
                         <div class="form-group">
-                            <label for="startUnitId">Kategoria</label>
+                            <label for="startUnitId">Category</label>
                             <InputSelect class="form-control" @bind-Value="@bill.CategoryId">
                                 @foreach (var category in _category.category)
                                     {
@@ -60,16 +60,16 @@ else
                 </div>
             </form>
             <div class="form-group">
-                <label>Data Zakupu</label>
+                <label>Buy Date</label>
                 <InputDate class="form-control" @bind-Value="@bill.BuyDate">
 
                 </InputDate>
             </div>
             <div class="form-group">
-                <label for="startUnitId">Komentarz</label>
+                <label for="startUnitId">Comment</label>
                 <InputTextArea class="form-control" @bind-Value="@bill.comment"></InputTextArea>
             </div>
-            <input class="btn btn-primary" type="submit" Value="Dodaj">
+            <input class="btn btn-primary" type="submit" Value="Add">
 
         </EditForm>
     </div>

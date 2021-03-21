@@ -10,7 +10,7 @@
 
     <thead>
         <tr>
-            <th id="a">Nazwa Płatnika</th>
+            <th id="a">Payer Name</th>
             <th></th>
         </tr>
     </thead>
@@ -30,7 +30,7 @@
         }
         <tr>
             <td>
-                <input type="text" @bind="personName" name="name" placeholder="Nowy Płatnik">
+                <input type="text" @bind="personName" name="name" placeholder="New Payer">
             </td>
 
             <td>
@@ -43,10 +43,10 @@
 
 </table>
 
-<ConfirmComp Title=@("Usunięcie Płatnika") Message=@($"Czy chcesz usunąć {deleteName}? Spowoduje to usunięcie wszystkich przypisanych rachunków.") 
+<ConfirmComp Title=@("Delete Payer") Message=@($"Are you sure, do you want delete {deleteName}? This will delete all assigned Bills.") 
 ConfirmChanged="ConfirmDeleteClick" @ref="DeleteConfirmation"></ConfirmComp>
 
-<EditComp Title=@("Edycja Płatika") Message=@($"Podaj nową nazwe dla {editName}.") 
+<EditComp Title=@("Edit Payer") Message=@($"Enter a new name for {editName}.") 
 ConfirmChanged="EditDeleteClick" @ref="EditConfirmation"></EditComp>  
 
 

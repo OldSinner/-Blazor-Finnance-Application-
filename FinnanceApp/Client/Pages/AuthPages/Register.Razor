@@ -15,7 +15,7 @@
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Stwórz konto!</h1>
+                                <h1 class="h4 text-gray-900 mb-4">Create Account</h1>
                             </div>
                             <EditForm class="user" Model="@user" OnValidSubmit="HandleRegister">
                                 <DataAnnotationsValidator />
@@ -23,12 +23,12 @@
                                   <Alert Message="@message" MessageType="@messageType"></Alert>
                                 <div class="form-group">
                                         <input type="text" class="form-control form-control-user" id="exampleFirstName"
-                                            placeholder="Nazwa użytkownika" @bind-value="user.Username" >                                  
+                                            placeholder="Username" @bind-value="user.Username" >                                  
                                   
                                 </div>
                                 <div class="form-group">
                                         <input type="email" class="form-control form-control-user" id="exampleInputEmail"
-                                        placeholder="Adres Email" @bind-value="user.Email">
+                                        placeholder="Email Address" @bind-value="user.Email">
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
@@ -40,13 +40,13 @@
                                             id="exampleRepeatPassword" placeholder="Repeat Password" @bind-value="user.ConfrimPassword">
                                     </div>
                                 </div>
-                                <input type="submit" class="btn btn-primary btn-user btn-block" disabled="@isBusy" Value="Zarejestruj">
+                                <input type="submit" class="btn btn-primary btn-user btn-block" disabled="@isBusy" Value="Register">
                                                                 
                             </EditForm>
                             <hr>
                             
                             <div class="text-center">
-                                <a class="small" href="/login">Masz już konto? Zaloguj się!</a>
+                                <a class="small" href="/login">Have a Account? Login In!</a>
                             </div>
                         </div>
                     </div>

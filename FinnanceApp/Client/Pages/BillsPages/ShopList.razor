@@ -10,7 +10,7 @@
 
     <thead>
         <tr>
-            <th id="a">Nazwa Sklepu</th>
+            <th id="a">Shop Name</th>
             <th></th>
         </tr>
     </thead>
@@ -42,10 +42,10 @@
 
 </table>
 
-<ConfirmComp Title=@("Usunięcie Sklepu") Message=@($"Czy chcesz usunąć {deleteName}? Spowoduje to usunięcie wszystkich przypisanych rachunków.") 
+<ConfirmComp Title=@("Shop Delete") Message=@($"Are you sure, do you want delete {deleteName}? This will delete all assigned Bills.") 
 ConfirmChanged="ConfirmDeleteClick" @ref="DeleteConfirmation"></ConfirmComp>
 
-<EditComp Title=@("Edycja Sklepu") Message=@($"Podaj nową nazwe dla {editName}.") 
+<EditComp Title=@("Shop Edit") Message=@($"Enter new name for {editName}.") 
 ConfirmChanged="EditDeleteClick" @ref="EditConfirmation"></EditComp>  
 
 
