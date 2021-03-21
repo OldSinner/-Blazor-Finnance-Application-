@@ -21,6 +21,7 @@ namespace FinnanceApp.Server.Services.ShopService
 
         public async Task<ServiceResponse<List<Shops>>> GetShopList()
         {
+            try{
             var response = new ServiceResponse<List<Shops>>();
             var user = await _utilityService.GetUser();
             var shops = await _context.Shops.Where(x => x.Owner.id == user.id).ToListAsync();
@@ -36,6 +37,15 @@ namespace FinnanceApp.Server.Services.ShopService
                 response.Message = "Uzyskano sklepy";
             }
             return response;
+            }catch (Exception x)
+            {
+                return new ServiceResponse<List<Shops>>
+                {
+                    Data = null,
+                    Message = x.Message,
+                    isSuccess = false
+                };
+            }
         }
 
         public async Task<bool> ShopExist(string name)
@@ -49,6 +59,7 @@ namespace FinnanceApp.Server.Services.ShopService
         }
         public async Task<ServiceResponse<int>> AddShop(string name)
         {
+            try{
             var response = new ServiceResponse<int>();
             if (await ShopExist(name))
             {
@@ -78,11 +89,21 @@ namespace FinnanceApp.Server.Services.ShopService
                 response.Message = $"Dodano sklep: {shop.name}";
             }
             return response;
+            }catch (Exception x)
+            {
+                return new ServiceResponse<int>
+                {
+                    Data = 0,
+                    Message = x.Message,
+                    isSuccess = false
+                };
+            }
 
         }
 
         public async Task<ServiceResponse<string>> DeleteShop(int id)
         {
+            try{
             var response = new ServiceResponse<string>();
             var user = await _utilityService.GetUser();
             Shops dbshop = await _context.Shops.FirstOrDefaultAsync(u => u.id == id && u.Owner == user);
@@ -104,9 +125,19 @@ namespace FinnanceApp.Server.Services.ShopService
                 response.Message = $"Sklep {dbshop.name} i {bills.Count} przypisanych rachunków zostały usunięte";
             }
             return response;
+            }catch (Exception x)
+            {
+                return new ServiceResponse<string>
+                {
+                    Data = string.Empty,
+                    Message = x.Message,
+                    isSuccess = false
+                };
+            }
         }
         public async Task<ServiceResponse<int>> EditShop(Shops shop)
         {
+            try{
             var response = new ServiceResponse<int>();
             Shops dbshop = await _context.Shops.FirstOrDefaultAsync(u => u.id == shop.id);
             if (dbshop == null)
@@ -124,6 +155,15 @@ namespace FinnanceApp.Server.Services.ShopService
                 response.Message += dbshop.name;
             }
             return response;
+            }catch (Exception x)
+            {
+                return new ServiceResponse<int>
+                {
+                    Data = 0,
+                    Message = x.Message,
+                    isSuccess = false
+                };
+            }
 
 
         }
