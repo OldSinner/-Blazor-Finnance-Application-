@@ -8,7 +8,7 @@
 <AuthorizeView Roles="Admin">
         <a class="nav-link" href="auserlist">
             <i class="fas fa-th-list"></i>
-            <span>Lista Użytkowników</span>
+            <span>User List</span>
         </a>
    
 </AuthorizeView>
@@ -18,76 +18,59 @@
 
 
         <body id="page-top">
-
-            <!-- Page Wrapper -->
             <div id="wrapper">
-
-                <!-- Sidebar -->
                 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-                    <!-- Sidebar - Brand -->
                     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="#">
-
                         <div class="sidebar-brand-text mx-3">OSFinnanceApp </div>
                     </a>
-
-                    <!-- Divider -->
                     <hr class="sidebar-divider my-0">
 
-                    <!-- Nav Item - Dashboard -->
                     <li class="nav-item active">
                         <a class="nav-link" href="#">
                             <i class="fas fa-fw fa-tachometer-alt"></i>
-                            <span>Menu Główne</span>
+                            <span>Dashboard</span>
                         </a>
                     </li>
-
-                    <!-- Divider -->
                     <hr class="sidebar-divider">
-
-                    <!-- Heading -->
                     <div class="sidebar-heading">
-                        Rachunki
+                        Bills
                     </div>
-
-
                     <li class="nav-item">
                         <a class="nav-link" href="/bills/page/1">
                             <i class="fas fa-th-list"></i>
-                            <span>Lista Rachunków</span>
+                            <span>Bill List</span>
                         </a>
-
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/bills/add">
                             <i class="fas fa-plus-circle"></i>
-                            <span>Dodaj Rachunek </span>
+                            <span>Add Bill</span>
                         </a>
 
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/list">
                             <i class="fas fa-users"></i>
-                            <span>Sklepy i Płatnicy</span>
+                            <span>Shops and Payers</span>
                         </a>
 
                     </li>
                     <hr class="sidebar-divider">
                     <div class="sidebar-heading">
-                        Dodatkowe
+                        Additional
                     </div>
                     
                     <li class="nav-item">
                         <a class="nav-link" href="/monthlist">
                            <i class="fas fa-money-check-alt"></i>
-                            <span>Transakcje Miesięczne</span>
+                            <span>Month Bill</span>
                         </a>
 
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/utility">
                            <i class="fas fa-align-justify"></i>
-                            <span>Dodatkowe </span>
+                            <span>Additional </span>
                         </a>
 
                     </li>
@@ -131,26 +114,19 @@
                                         aria-labelledby="userDropdown">
                                         <a class="dropdown-item" href="profile">
                                             <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Profil
+                                            Profile
                                         </a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item" href="logout">
                                             <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                                            Wyloguj
+                                            Logout
                                         </a>
                                     </div>
-
-                                </li>
-
+                               </li>
                             </ul>
-
                         </nav>
-                        <!-- End of Topbar -->
-                        <!-- Begin Page Content -->
                         <div class="container-fluid">
-
                             @Body
-                            <!-- Footer -->
                             <footer class="sticky-footer bg-white">
                                 <div class="container my-auto">
                                     <div class="copyright text-center my-auto">
@@ -158,13 +134,8 @@
                                     </div>
                                 </div>
                             </footer>
-                            <!-- End of Footer -->
-
                         </div>
-                        <!-- End of Content Wrapper -->
-
                     </div>
-                    <!-- End of Page Wrapper -->
                     <a class="scroll-to-top rounded" href="#page-top">
                         <i class="fas fa-angle-up"></i>
                     </a>
